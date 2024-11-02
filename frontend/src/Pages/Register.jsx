@@ -28,6 +28,7 @@ const Register = () => {
   const [passwordStrength, setPasswordStrength] = useState(""); // State for password strength feedback
   const [errors, setErrors] = useState({});
   const [passwordVisible, setPasswordVisible] = useState(false); // State for password visibility
+  const [showPasswordRequirements, setShowPasswordRequirements] = useState(false);
 
 
   const handleRegister = async (e) => {
@@ -271,6 +272,8 @@ const Register = () => {
               type={passwordVisible ? "text" : "password"} // Change the type based on password visibility    
               id="password"
               value={password}
+              onFocus={() => setShowPasswordRequirements(true)} 
+              onBlur={() => setShowPasswordRequirements(false)} 
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Create a password"
               className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -303,6 +306,14 @@ const Register = () => {
               </p>
             )}
             {errors.password && <div className="text-red-800">{errors.password}</div>}
+            {showPasswordRequirements && (
+              <ul className="mt-2 text-xs text-gray-500 list-disc list-inside">
+                <li>At least 6 characters long</li>
+                <li>Contains at least one uppercase letter</li>
+                <li>Includes one number</li>
+                <li>Has one special character (e.g., !@#$%^&*)</li>
+              </ul>
+            )}
           </div>
 
           <button
